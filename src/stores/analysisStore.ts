@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import type { XRFSample, PotterySample, FilterConfig, PCAResult, MatchResult } from '@/types'
 import { parseXRFData } from '@/core/xrfParser'
 import { computePCA } from '@/core/pcaEngine'
@@ -108,6 +108,12 @@ export const useAnalysisStore = defineStore('analysis', () => {
       isAnalyzing.value = false
     }
   }
+
+  watch(filterConfig, () => {
+    if (pcaResult.value !== null && uploadedSamples.value.length > 0) {
+      runAnalysis()
+    }
+  }, { deep: true })
 
   return {
     uploadedSamples,
