@@ -60,3 +60,20 @@ export interface CachedState {
   uploadedFileNames: string[]
   searchHistory: string[]
 }
+
+export interface HeatmapCell {
+  element: string
+  kilnA: string
+  kilnB: string
+  diffA: number
+  diffB: number
+  delta: number
+  deltaPercent: number
+}
+
+export interface HeatmapData {
+  elements: string[]
+  kilns: [string, string]
+  cells: HeatmapCell[]
+  maxDelta: number
+}

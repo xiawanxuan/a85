@@ -4,10 +4,13 @@ import FileUpload from '@/components/FileUpload.vue'
 import FilterPanel from '@/components/FilterPanel.vue'
 import CurveCanvas from '@/components/CurveCanvas.vue'
 import ScatterCanvas from '@/components/ScatterCanvas.vue'
+import HeatmapCanvas from '@/components/HeatmapCanvas.vue'
+import KilnCompareSelector from '@/components/KilnCompareSelector.vue'
 import MatchRanking from '@/components/MatchRanking.vue'
 import ReportExport from '@/components/ReportExport.vue'
 
 const scatterCanvasRef = ref<InstanceType<typeof ScatterCanvas> | null>(null)
+const heatmapCanvasRef = ref<InstanceType<typeof HeatmapCanvas> | null>(null)
 
 const scatterSvgEl = computed(() => {
   return scatterCanvasRef.value?.getSvgEl?.() ?? null
@@ -35,13 +38,19 @@ const scatterSvgEl = computed(() => {
       <aside class="w-72 flex-shrink-0 border-r border-border bg-gradient-to-b from-card to-parchment overflow-y-auto p-4 space-y-4">
         <FileUpload />
         <FilterPanel />
+        <KilnCompareSelector />
         <ReportExport :scatter-svg-ref="scatterSvgEl" />
       </aside>
 
       <main class="flex-1 flex flex-col overflow-hidden">
         <div class="flex-1 flex flex-col p-4 gap-4 overflow-y-auto">
-          <div class="flex-1 min-h-0">
-            <CurveCanvas />
+          <div class="grid grid-cols-2 gap-4 flex-1 min-h-0">
+            <div class="min-w-0">
+              <CurveCanvas />
+            </div>
+            <div class="min-w-0">
+              <HeatmapCanvas ref="heatmapCanvasRef" />
+            </div>
           </div>
           <div class="flex-1 min-h-0">
             <ScatterCanvas ref="scatterCanvasRef" />
